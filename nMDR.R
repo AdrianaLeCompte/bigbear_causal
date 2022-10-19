@@ -1,10 +1,10 @@
+#load libraries
 library(tidyverse)
 library(vegan)
 library(ggplot2)
 library(readxl)
 
 #pull in data
-
 benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 
 #select columns of interest
