@@ -16,7 +16,6 @@ benthic_df <- select(benthic_all_df, StationCode, SampleDate, CollectionMethodNa
 benthic_df_ID <- benthic_df %>% 
   unite("SampleID", StationCode, SampleDate, CollectionMethod, CollectionReplicate) %>% #create sampleID
   mutate(P_A = 1) %>% #add presence absence column
-  select(-c(CollectionMethodName, BAResult)) %>% #remove extra columns
   group_by(SampleID, FinalID) %>% #group the presence by sample ID and final ID
   summarize(P_A = sum(P_A)) %>% #summarize the presence by sample ID and final ID
   ungroup() %>% 
