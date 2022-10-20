@@ -36,3 +36,13 @@ benthic_samples <- data.frame(scores(benthic_ord, display = "sites")) %>%
 
 #create csv with results
 write.csv(benthic_samples, file = "nMDR results.csv", row.names = FALSE)
+
+#calculate other metrics
+
+#richness
+richness_col <- benthic_df %>%
+  group_by(SampleID, FinalID) %>% 
+  summarize(BAResult)
+
+#evenness
+diversity(benthic_df)
