@@ -8,9 +8,8 @@ library(readxl)
 benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 
 #select columns of interest
-benthic_df <- select(benthic_all_df, StationCode, SampleDate, CollectionMethodName, FinalID, BAResult, CollectionReplicate) %>% 
-  filter(CollectionMethodName == "BMI_Reach-WideBenthos") %>% 
-  mutate(CollectionMethod = "BMI_RWB") #create column for later ID identification
+benthic_df <- benthic_all_df %>% filter(CollectionMethodName == "BMI_Reach-WideBenthos") %>% 
+  mutate(CollectionMethod = "BMI_RWB", SampleID=paste(StationCode, SampleDate, CollectionMethod, CollectionReplicate, sep="_"))
 
 #create dataframe as p_a matrix (24 unique sampleIDs, 146 unique species)
 benthic_df_ID <- benthic_df %>% 
