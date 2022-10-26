@@ -33,11 +33,8 @@ benthic_df_pa <- benthic_df %>%
 benthic_ord_pa <- metaMDS(benthic_df_pa, k = 2, try = 20, trymax = 50, autotransform = F)
 
 #turn object into dataframe to extract scores
-benthic_samples_pa <- data.frame(scores(benthic_ord_pa, display = "sites"))
-  #add_column(.before = "NMDS1", benthic_df_pa$SampleID)
+benthic_scores_pa <- data.frame(scores(benthic_ord_pa, display = "sites"))
 
-#create csv with results
-#write.csv(benthic_samples, file = "nMDR results.csv", row.names = FALSE)
 
 #calculate other metrics
 
