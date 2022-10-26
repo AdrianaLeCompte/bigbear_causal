@@ -38,3 +38,8 @@ benthic_scores_pa <- data.frame(scores(benthic_ord_pa, display = "sites")) %>%
   mutate(StationID = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
          Replicate = str_sub(SampleID, -1), SamDate = lubridate::as_date(SamDate),
          Year = lubridate::year(SamDate), Month = lubridate::month(SamDate, label=TRUE, abbr = F))
+
+#plot ordination scores
+ggplot(benthic_scores_pa, aes(x = NMDS1, y = NMDS2, colour = StationID)) +
+  geom_point()
+  #geom_label(aes(label = Month))
