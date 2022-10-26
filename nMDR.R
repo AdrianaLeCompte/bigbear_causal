@@ -32,16 +32,9 @@ benthic_df_pa <- benthic_df %>%
 #run nMDS function to get ordination object
 benthic_ord_pa <- metaMDS(benthic_df_pa, k = 2, try = 20, trymax = 50, autotransform = F)
 
-#turn object into dataframe to extract scores
-benthic_scores_pa <- data.frame(scores(benthic_ord_pa, display = "sites"))
-
-
-#calculate other metrics
-
-#richness
-#richness_col <- benthic_df %>%
-  #group_by(SampleID, FinalID) %>% 
-  #summarize(BAResult)
-
-#evenness
-#diversity(benthic_df)
+#extract scores from ordination
+benthic_scores_pa <- data.frame(scores(benthic_ord_pa, display = "sites")) %>% 
+  rownames_to_column("SampleID") %>% 
+  mutate(StationID = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
+         Replicate = str_sub(SampleID, -1), SamDate = lubridate::as_date(SamDate),
+         Year = lubridate::year(SamDate), Month = lubridate::month(SamDate, label=TRUE, abbr = F))
