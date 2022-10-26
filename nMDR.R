@@ -12,16 +12,14 @@ benthic_df <- benthic_all_df %>% filter(CollectionMethodName == "BMI_Reach-WideB
   mutate(CollectionMethod = "BMI_RWB", SampleID=paste(StationCode, SampleDate, CollectionMethod, CollectionReplicate, sep="_"))
 
 #create dataframe as p_a matrix (24 unique sampleIDs, 146 unique species)
-benthic_df_ID <- benthic_df %>% 
-  unite("SampleID", StationCode, SampleDate, CollectionMethod, CollectionReplicate) %>% #create sampleID
-  mutate(P_A = 1) %>% #add presence absence column
+benthic_df_pa <- benthic_df %>% 
+  unite("SampleID", StationCode, SampleDate, CollectionMethod, CollectionReplicate) %>%
+  mutate(p_a = 1) %>% #create sampleID
   group_by(SampleID, FinalID) %>% #group the presence by sample ID and final ID
-  summarize(P_A = sum(P_A)) %>% #summarize the presence by sample ID and final ID
+  summarize(p_a = sum(p_a)) %>% #summarize the presence by sample ID and final ID
   ungroup() %>% 
-  mutate(P_A = case_when(P_A >= 1 ~ 1, #make any presence above 1 to 1 (due to summarizing)
-                   TRUE ~ 0)) %>% 
-  pivot_wider(names_from = FinalID, values_from = P_A, values_fill = 0) %>% #pivot dataframe
-  rownames_to_column() #add rownames
+  pivot_wider(names_from = FinalID, values_from = p_a, values_fill = 0) %>% #pivot dataframe
+  column_to_rownames("SampleID") #move SampleID column into rownames
 
 #create numeric matrix from dataframe
 ben_matrix <- data.matrix(benthic_df_ID)
