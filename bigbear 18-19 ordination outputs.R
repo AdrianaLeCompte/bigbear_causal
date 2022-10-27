@@ -4,9 +4,6 @@ library(vegan)
 library(ggplot2)
 library(readxl)
 
-install.packages("paletteer")
-library(paletteer)
-
 #pull in data
 benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 
@@ -82,4 +79,7 @@ bb.pa.plot2 <- benthic_scores_abun %>%
        subtitle = 'Big bear causal assessment 2018-2019'
   )
 bb.pa.plot2
+
+ggsave("bigbear sp abun ord plot.png", bb.pa.plot2)
+ggsave("bigbear sp pres ord plot.png", bb.pa.plot)
 
