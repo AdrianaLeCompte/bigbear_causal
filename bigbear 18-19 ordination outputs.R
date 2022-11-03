@@ -60,7 +60,7 @@ bb.pa.plot <- benthic_scores_pa %>%
                     axis.title = element_text(face = "bold"))+
   geom_point(aes(fill = StationID, shape = Year), size = 2.5)+
   scale_shape_manual(values = c(21,22))+
-  geom_text(aes(label = Month), nudge_y = -0.025)+
+  geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   guides(fill=guide_legend(override.aes = list(shape=21)))+
   labs(title = 'Presence',
        subtitle = 'Big bear causal assessment 2018-2019'
@@ -73,8 +73,8 @@ bb.pa.plot2 <- benthic_scores_abun %>%
                     axis.title = element_text(face = "bold"))+
   geom_point(aes(fill = StationID, shape = Year), size = 2.5)+
   scale_shape_manual(values = c(21,22))+
-  geom_text(aes(label = Month), nudge_y = -0.025)+
   guides(fill=guide_legend(override.aes = list(shape=21)))+
+  geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   labs(title = 'Abundance',
        subtitle = 'Big bear causal assessment 2018-2019'
   )
@@ -83,3 +83,5 @@ bb.pa.plot2
 ggsave("bigbear sp abun ord plot.png", bb.pa.plot2)
 ggsave("bigbear sp pres ord plot.png", bb.pa.plot)
 
+install.packages("ggrepel")
+library(ggrepel)
