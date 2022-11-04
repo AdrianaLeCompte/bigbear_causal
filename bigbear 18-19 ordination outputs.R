@@ -12,23 +12,6 @@ benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 benthic_df <- benthic_all_df %>% filter(CollectionMethodName == "BMI_Reach-WideBenthos") %>% 
   mutate(CollectionMethod = "BMI_RWB", SampleID=paste(StationCode, SampleDate, CollectionMethod, CollectionReplicate, sep="_"))
 
-short_names_df <- benthic_df %>% 
-  mutate(
-    StationShrName = case_when(
-      StationCode == "801BBAG01" ~ "Aspen Glen Creek",
-      StationCode == "801BBGC01" ~ "Lower Grout Creek",
-      StationCode == "801BBGC02" ~ "Mid Grout Creek",
-      StationCode == "801MFC100" ~ "Upper Metcalf Creek",
-      StationCode == "801BBMC01" ~ "Lower Metcalf Creek",
-      StationCode == "801BBMC02" ~ "Mid Metcalf Creek",
-      StationCode == "801BBRC02" ~ "Upper Rathbun Creek",
-      StationCode == "801BBRC01" ~ "Lower Rathbun Creek",
-      StationCode == "801S31343" ~ "Mid Rathbun Creek",
-      StationCode == "801BBSCW1" ~ "Summit Creek",
-      StationCode == "801M15547" ~ "Boulder Creek"
-    )
-  )
-
 # Ordination with both years ----------------------------------------------
 
 
