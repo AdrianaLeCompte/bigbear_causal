@@ -113,10 +113,10 @@ benthic_df_abun_19 <- benthic_df %>%
   column_to_rownames("SampleID")
 
 #run nMDS function to get ordination object & stress
-benthic_ord_abun_18 <- metaMDS(benthic_df_abun_18, k = 2, try = 20, trymax = 50, autotransform = F)
+benthic_ord_abun_18 <- metaMDS(benthic_df_abun_18, k = 2, try = 1000, trymax = 10000, autotransform = F)
 stress_abun_18 = benthic_ord_abun_18$stress
 
-benthic_ord_abun_19 <- metaMDS(benthic_df_abun_19, k = 2, try = 20, trymax = 50, autotransform = F)
+benthic_ord_abun_19 <- metaMDS(benthic_df_abun_19, k = 2, try = 1000, trymax = 10000, autotransform = F)
 stress_abun_19 = benthic_ord_abun_19$stress
 
 #extract scores from ordination
