@@ -12,6 +12,22 @@ benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 benthic_df <- benthic_all_df %>% filter(CollectionMethodName == "BMI_Reach-WideBenthos") %>% 
   mutate(CollectionMethod = "BMI_RWB", SampleID=paste(StationCode, SampleDate, CollectionMethod, CollectionReplicate, sep="_"))
 
+short_names_df <- benthic_df %>% 
+  mutate(
+    StationShrName = case_when(
+      StationCode == "801BBAG01" ~ "Aspen Glen Creek",
+      StationCode == "801BBGC01" ~ "Lower Grout Creek",
+      StationCode == "801BBGC02" ~ "Mid Grout Creek",
+      StationCode == "801MFC100" ~ "Upper Metcalf Creek",
+      StationCode == "801BBMC01" ~ "Lower Metcalf Creek",
+      StationCode == "801BBMC02" ~ "Mid Metcalf Creek",
+      StationCode == "801BBRC02" ~ "Upper Rathbun Creek",
+      StationCode == "801BBRC01" ~ "Lower Rathbun Creek",
+      StationCode == "801S31343" ~ "Mid Rathbun Creek",
+      StationCode == "801BBSCW1" ~ "Summit Creek",
+      StationCode == "801M15547" ~ "Boulder Creek"
+    )
+  )
 
 # Ordination with both years ----------------------------------------------
 
@@ -121,14 +137,26 @@ stress_abun_19 = benthic_ord_abun_19$stress
 #extract scores from ordination
 benthic_scores_abun_18 <- data.frame(scores(benthic_ord_abun_18, display = "sites")) %>% 
   rownames_to_column("SampleID") %>% 
-  mutate(StationID = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
+  mutate(StationCode = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
          Replicate = str_sub(SampleID, -1), SamDate = lubridate::as_date(SamDate),
          Year = lubridate::year(SamDate), Month = lubridate::month(SamDate, label=TRUE, abbr = F)) %>% 
-  mutate(Year = as.factor(Year))
+  mutate(Year = as.factor(Year)) %>% 
+  mutate(StationShrName = case_when(
+    StationCode == "801BBAG01" ~ "Aspen Glen Creek",
+    StationCode == "801BBGC01" ~ "Lower Grout Creek",
+    StationCode == "801BBGC02" ~ "Mid Grout Creek",
+    StationCode == "801MFC100" ~ "Upper Metcalf Creek",
+    StationCode == "801BBMC01" ~ "Lower Metcalf Creek",
+    StationCode == "801BBMC02" ~ "Mid Metcalf Creek",
+    StationCode == "801BBRC02" ~ "Upper Rathbun Creek",
+    StationCode == "801BBRC01" ~ "Lower Rathbun Creek",
+    StationCode == "801S31343" ~ "Mid Rathbun Creek",
+    StationCode == "801BBSCW1" ~ "Summit Creek",
+    StationCode == "801M15547" ~ "Boulder Creek"))
 
 benthic_scores_abun_19 <- data.frame(scores(benthic_ord_abun_19, display = "sites")) %>% 
   rownames_to_column("SampleID") %>% 
-  mutate(StationID = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
+  mutate(StationCode = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
          Replicate = str_sub(SampleID, -1), SamDate = lubridate::as_date(SamDate),
          Year = lubridate::year(SamDate), Month = lubridate::month(SamDate, label=TRUE, abbr = F)) %>% 
   mutate(Year = as.factor(Year))
@@ -138,18 +166,17 @@ bb.abun.plot.18 <- benthic_scores_abun_18 %>%
   ggplot(., aes(x = NMDS1, y = NMDS2)) +
   theme_bw()+ theme(panel.grid = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(),
                     axis.title = element_text(face = "bold"))+
-  geom_point(aes(fill = StationID), pch = 21, size = 2.5)+
+  geom_point(aes(fill = StationShrName), pch = 21, size = 2.5)+
   geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   labs(title = 'Abundance',
-       subtitle = 'Big bear causal assessment 2018'
-  )
+       subtitle = 'Big bear causal assessment 2018')
 bb.abun.plot.18
 
 bb.abun.plot.19 <- benthic_scores_abun_19 %>% 
   ggplot(., aes(x = NMDS1, y = NMDS2)) +
   theme_bw()+ theme(panel.grid = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(),
                     axis.title = element_text(face = "bold"))+
-  geom_point(aes(fill = StationID), pch = 21, size = 2.5)+
+  geom_point(aes(fill = StationCode), pch = 21, size = 2.5)+
   geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   labs(title = 'Abundance',
        subtitle = 'Big bear causal assessment 2019'
