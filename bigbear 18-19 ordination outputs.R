@@ -86,8 +86,8 @@ bb.pa.plot2 <- benthic_scores_abun %>%
   )
 bb.pa.plot2
 
-ggsave("bigbear nMDS ord abundance.png", bb.pa.plot2)
-ggsave("bigbear nMDS ord presence.png", bb.pa.plot)
+ggsave("plots/bigbear nMDS ord abun 18-19.png", bb.pa.plot2)
+ggsave("plots/bigbear nMDS ord pa 18-19.png", bb.pa.plot)
 
 
 
@@ -161,8 +161,8 @@ bb.abun.plot.19 <- benthic_scores_abun_19 %>%
 bb.abun.plot.19
 
 #save graphs
-ggsave("results/bigbear nMDS ord abun 18.png", bb.abun.plot.18)
-ggsave("results/bigbear nMDS ord abun 19.png", bb.abun.plot.19)
+ggsave("plots/bigbear nMDS ord abun 18.png", bb.abun.plot.18)
+ggsave("plots/bigbear nMDS ord abun 19.png", bb.abun.plot.19)
 
 # Pres/Abs ordination by year ---------------------------------------------
 
@@ -237,6 +237,6 @@ bb.pa.plot.19 <- benthic_scores_pa_19 %>%
 bb.pa.plot.19
 
 #save graphs
-ggsave("results/bigbear nMDS ord pa 18.png", bb.pa.plot.18)
-ggsave("results/bigbear nMDS ord pa 19.png", bb.pa.plot.19)
+ggsave("plots/bigbear nMDS ord pa 18.png", bb.pa.plot.18)
+ggsave("plots/bigbear nMDS ord pa 19.png", bb.pa.plot.19)
 
