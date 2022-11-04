@@ -167,6 +167,7 @@ bb.abun.plot.18 <- benthic_scores_abun_18 %>%
   theme_bw()+ theme(panel.grid = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(),
                     axis.title = element_text(face = "bold"))+
   geom_point(aes(fill = StationShrName), pch = 21, size = 2.5)+
+  scale_fill_discrete(name = "Station Name")+
   geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   labs(title = 'Abundance',
        subtitle = 'Big bear causal assessment 2018')
