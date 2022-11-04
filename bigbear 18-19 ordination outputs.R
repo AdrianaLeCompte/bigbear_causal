@@ -68,7 +68,7 @@ bb.pa.plot <- benthic_scores_pa %>%
   scale_shape_manual(values = c(21,22))+
   geom_text_repel(aes(NMDS1, NMDS2, label = Month))+
   guides(fill=guide_legend(override.aes = list(shape=21)))+
-  labs(title = 'Presence',
+  labs(title = 'Presence Absence',
        subtitle = 'Big bear causal assessment 2018-2019'
          )
 bb.pa.plot
