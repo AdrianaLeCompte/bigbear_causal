@@ -36,3 +36,23 @@ summary(bb_perm_pa)
 #export results
 write.csv(bb_perm_pa, file = "results/big bear 18-19 permanova results.csv")
 
+#run permanova with abundance matrix
+bb_ab_matrix <- bb_edited_data %>% 
+  group_by(SampleID, FinalID) %>% 
+  summarize(BAResult_sum = sum(BAResult)) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = FinalID, values_from = BAResult_sum, values_fill = 0) %>% 
+  mutate(.before = "Agabus", Site = str_sub(SampleID,1,9), SamDate = str_sub(SampleID,11,20), 
+         SamDate = lubridate::as_date(SamDate), Year = lubridate::year(SamDate), 
+         Month = lubridate::month(SamDate, label=TRUE, abbr = F)) %>% 
+  select(-c(SampleID, SamDate))
+
+bb_perm_ab <- adonis2(formula = (select(bb_ab_matrix,4:149))~Site*Year, data = (select(bb_ab_matrix,1:3)),
+                      permutations = 10000, method = "bray")
+
+bb_perm_ab_2 <- adonis2(formula = (select(bb_ab_matrix,4:149))~Site+Year, data = (select(bb_ab_matrix,1:3)),
+                      permutations = 10000, method = "bray")
+
+write.csv(bb_perm_ab, file = "results/big bear 18-19 permanova results ab.csv")
+write.csv(bb_perm_ab_2, file = "results/big bear 18-19 permanova results ab 2.csv")
+
