@@ -25,11 +25,14 @@ bb_pa_matrix <- bb_edited_data %>%
   select(-c(SampleID, SamDate))
 
 #permanova function
-bb_perm_pa<- adonis2(formula = (select(bb_pa_matrix,4:149))~Site*Year, data = (select(bb_pa_matrix,1:3)),
+bb_perm_pa <- adonis2(formula = (select(bb_pa_matrix,4:149))~Site*Year, data = (select(bb_pa_matrix,1:3)),
                         permutations = 10000, method = "bray")
 
-bb_perm_sum <- tidy(bb_perm_pa)
+bb_perm_pa_2 <- adonis2(formula = (select(bb_pa_matrix,4:149))~Site+Year, data = (select(bb_pa_matrix,1:3)),
+                        permutations = 10000, method = "bray")
+
+summary(bb_perm_pa)
 
 #export results
-write.csv(bb_perm_sum, file = "big bear 18-19 permanova summary.csv", row.names = F)
+write.csv(bb_perm_pa, file = "results/big bear 18-19 permanova results.csv")
 
