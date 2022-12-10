@@ -12,7 +12,7 @@ benthic_all_df <- read_excel("BBTrib_Benthic_2018_2019.xlsx") %>% as_tibble
 benthic_df <- benthic_all_df %>% filter(CollectionMethodName == "BMI_Reach-WideBenthos") %>% 
   mutate(CollectionMethod = "BMI_RWB", SampleID=paste(StationCode, SampleDate, CollectionMethod, CollectionReplicate, sep="_"))
 
-short_names <- read.csv(file = "18-19 site inventory.csv")
+short_names <- read.csv(file = "data/18-19 site inventory.csv")
 
 # Ordination with both years ----------------------------------------------
 
