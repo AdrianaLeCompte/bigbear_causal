@@ -9,11 +9,7 @@ library(ggrepel)
 phab_all_df <- read.csv("data/phab_bb.csv") %>% as_tibble
 
 phab_ma <- phab_all_df %>%
-  mutate(Year = lubridate::year(sampledate), Month = lubridate::month(sampledate, label=TRUE, abbr = F))%>%
-  mutate(date = paste(Year, Month, sep = "_")) %>% 
-  mutate(sampleID = paste(stationcode, date, sep = "_")) %>% 
-  group_by(sampleID, analytename) %>% 
-  ungroup() %>% 
+  mutate(sampleID = paste(stationcode, month, year, sep = "_")) %>% 
   pivot_wider(names_from = analytename, values_from = result, values_fill = 0) %>% 
   column_to_rownames("sampleID")
 
